@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: ./frontend.df
+    container_name: frontend
+    ports:
+    - "9099:80"
+    volumes:
+    - "/trainer-project:/var/www/html"
+    depends_on:
+    - database
+
+  database:
+    build:
+      context: .
+      dockerfile: ./db.df
+    container_name: db
+    volumes:
+    - "task4_v2_mysql_data:/var/lib/mysql"
+    environment:
+    - MYSQL_ROOT_PASSWORD=123
+
+volumes:
+  task4_v2_mysql_data:
+    driver: local
